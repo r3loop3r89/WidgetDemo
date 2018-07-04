@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="leftmostbutton">
+        <item name="android:background">@drawable/leftmost_button</item>
+    </style>
+
+    <style name="rightmostbutton">
+        <item name="android:background">@drawable/rightmost_button</item>
+    </style>
+
+    <style name="centerbutton">
+        <item name="android:background">@drawable/center_button</item>
+    </style>
+
+</resources>
