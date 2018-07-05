@@ -1,11 +1,9 @@
-package com.shra1.widgetdemo;
+package com.shra1.widgetdemo.widgets;
 
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -14,16 +12,18 @@ import android.provider.Settings;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.shra1.widgetdemo.R;
+
 /**
  * Implementation of App Widget functionality.
  */
 public class NewAppWidget extends AppWidgetProvider {
 
-    private static final String Minimum = "Minimum";
-    private static final String TwentyFive = "TwentyFive";
-    private static final String Fifty = "Fifty";
-    private static final String SeventyFive = "SeventyFive";
-    private static final String Maximum = "Maximum";
+    public static final String Minimum = "Minimum";
+    public static final String TwentyFive = "TwentyFive";
+    public static final String Fifty = "Fifty";
+    public static final String SeventyFive = "SeventyFive";
+    public static final String Maximum = "Maximum";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -42,10 +42,32 @@ public class NewAppWidget extends AppWidgetProvider {
         Toast.makeText(context, "widget added", Toast.LENGTH_SHORT).show();
     }
 
-    private static PendingIntent getPendingIntent(Context context, int requestCode, String action) {
+    public static PendingIntent getPendingIntent(Context context, int requestCode, String action) {
         Intent i = new Intent(context, NewAppWidget.class);
         i.setAction(action);
         return PendingIntent.getBroadcast(context, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    public static void takePermissionAndApplyBrightness(final Context context, int value) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Settings.System.canWrite(context)) {
+                // Do stuff here
+                Settings.System.putInt(context.getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS, value); //<-- 1-225
+            } else {
+
+                Toast.makeText(context, "Allow to change system settings!", Toast.LENGTH_SHORT).show();
+
+                Intent inten = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                inten.setData(Uri.parse("package:" + context.getPackageName()));
+                inten.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(inten);
+
+            }
+        } else {
+            Settings.System.putInt(context.getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS, value); //<-- 1-225
+        }
     }
 
     @Override
@@ -77,42 +99,20 @@ public class NewAppWidget extends AppWidgetProvider {
                 break;
             case TwentyFive:
                 ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(40);
-                takePermissionAndApplyBrightness(context, 64);
+                takePermissionAndApplyBrightness(context, 32);
                 break;
             case Fifty:
                 ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(60);
-                takePermissionAndApplyBrightness(context, 128);
+                takePermissionAndApplyBrightness(context, 64);
                 break;
             case SeventyFive:
                 ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(80);
-                takePermissionAndApplyBrightness(context, 192);
+                takePermissionAndApplyBrightness(context, 128);
                 break;
             case Maximum:
                 ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(100);
-                takePermissionAndApplyBrightness(context, 255);
+                takePermissionAndApplyBrightness(context, 192);
                 break;
-        }
-    }
-
-    private void takePermissionAndApplyBrightness(final Context context, int value) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Settings.System.canWrite(context)) {
-                // Do stuff here
-                Settings.System.putInt(context.getContentResolver(),
-                        Settings.System.SCREEN_BRIGHTNESS, value); //<-- 1-225
-            } else {
-
-                Toast.makeText(context, "Allow to change system settings!", Toast.LENGTH_SHORT).show();
-
-                Intent inten = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                inten.setData(Uri.parse("package:" + context.getPackageName()));
-                inten.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(inten);
-
-            }
-        } else {
-            Settings.System.putInt(context.getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS, value); //<-- 1-225
         }
     }
 }

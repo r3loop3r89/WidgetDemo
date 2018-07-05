@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="sans-serif-condensed"
-        android:text="1%" />
+        android:text="I" />
 
     <Button
         android:id="@+id/bTwentyFive"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="sans-serif-condensed"
-        android:text="25%" />
+        android:text="II" />
 
     <Button
         android:id="@+id/bFifty"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="sans-serif-condensed"
-        android:text="50%" />
+        android:text="III" />
 
     <Button
         android:id="@+id/bSeventyFive"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="sans-serif-condensed"
-        android:text="75%" />
+        android:text="IIII" />
 
     <Button
         android:id="@+id/bMaximum"
@@ -42,6 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="sans-serif-condensed"
-        android:text="100%" />
+        android:text="IIIII" />
 
 </LinearLayout>
